@@ -2,7 +2,7 @@
 
 ## App UI example
 
-![App screenshop](docs/app.png)
+![App screenshop](docs/appv2.png)
 
 ## Project info
 
