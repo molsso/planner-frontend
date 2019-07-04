@@ -1,0 +1,11 @@
+.panel {
+
+}
+
+.panel-card {
+    background-color: #fcfcfc;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 10px;
+}
