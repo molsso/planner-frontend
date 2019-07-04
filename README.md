@@ -1,3 +1,11 @@
+# Planner UI
+
+## App UI example
+
+![App screenshop](docs/app.png)
+
+## Project info
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
