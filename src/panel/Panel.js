@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import './Panel.css';
-import formatDate from "../formatDate";
+import formatDate from "../utils/formatDate";
 
 function Panel({title}) {
 
