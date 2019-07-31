@@ -7,7 +7,7 @@ function Panel({title, defaultStatus, tasks, onAdd}) {
 
     const [description, setDescription] = useState("");
     const [isAddingMode, setIsAddingMode] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    //const [isLoading, setIsLoading] = useState(false);
 
     function addTask() {
         setDescription("");
