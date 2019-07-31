@@ -1,5 +1,7 @@
 # Planner UI
 
+[![Build Status](https://travis-ci.com/loyola-open-source-course/planner-frontend.svg?branch=master)](https://travis-ci.com/loyola-open-source-course/planner-frontend)
+
 ## App UI example
 
 ![App screenshop](docs/appv2.png)
