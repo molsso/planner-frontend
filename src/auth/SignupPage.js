@@ -18,10 +18,11 @@ function SignupPage() {
         setIsLoading(true);
         authService.signup({username, password, fullName})
             .then(() => {
+                alert("Your account was created!");
                 setRedirect(true);
             })
-            .catch(() => {
-                setError("Something went wrong.");
+            .catch((e) => {
+                setError(e && e.response.data.message ? e.response.data.message : "Something went wrong.");
             })
             .then(() => {
                 setIsLoading(false);
