@@ -1,0 +1,16 @@
+language: javascript
+os: linux
+dist: trusty
+
+services:
+  - docker
+
+script:
+  - npm run build
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: master
