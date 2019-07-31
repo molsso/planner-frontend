@@ -1,47 +1,57 @@
 import React, {useState} from 'react';
 import authService from '../commons/auth.service';
-import {Link, Redirect} from "react-router-dom";
 import './LoginPage.css';
+import {Link, Redirect} from "react-router-dom";
 
-function Login() {
+function SignupPage() {
 
+    const [fullName, setFullname] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [redirect, setRedirect] = useState(false);
 
-
     function submit(e) {
         e.preventDefault();
         setError("");
-        authService.login(username, password)
+        authService.signup({username, password, fullName})
             .then(() => {
                 setRedirect(true);
             })
             .catch(() => {
-                setError("Wrong credentials.");
+                setError("Something went wrong.");
             });
     }
 
     if (redirect) {
-        return <Redirect to="/"/>;
+        return <Redirect to="/auth/login"/>;
     }
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
-                    <h1>Planner - login page</h1>
+                    <h1>Planner - registration</h1>
                 </div>
             </div>
 
             <div className="row">
                 <div className="login-form">
                     <form onSubmit={submit}>
-                        <h2 className="text-center">Log in</h2>
+                        <h2 className="text-center">Sign up</h2>
 
                         <div className="error">{error}</div>
 
+                        <div className="form-group">
+                            <input type="text"
+                                   className="form-control"
+                                   placeholder="Full name"
+                                   autoComplete="full-name"
+                                   required="required"
+                                   value={fullName}
+                                   onChange={e => setFullname(e.target.value)}
+                            />
+                        </div>
                         <div className="form-group">
                             <input type="text"
                                    className="form-control"
@@ -63,14 +73,14 @@ function Login() {
                             />
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="btn btn-primary btn-block">Log in</button>
+                            <button type="submit" className="btn btn-primary btn-block">Signup</button>
                         </div>
                         {/*<div className="clearfix">*/}
                         {/*    <a href="#" className="pull-right">Forgot Password?</a>*/}
                         {/*</div>*/}
                     </form>
                     <p className="text-center">
-                        <Link to="/auth/signup">Create an Account</Link>
+                        <Link to="/auth/login">Login to an Account</Link>
                     </p>
                 </div>
             </div>
@@ -78,4 +88,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default SignupPage;
