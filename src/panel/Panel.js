@@ -1,23 +1,30 @@
 import React, {useState} from "react";
 import './Panel.css';
-import formatDate from "../utils/formatDate";
+import axios from "axios";
+import moment from 'moment';
 
-function Panel({title}) {
+function Panel({title, tasks, onAdd}) {
 
-    const [tasks, setTasks] = useState([]);
     const [description, setDescription] = useState("");
     const [isAddingMode, setIsAddingMode] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     function addTask() {
-        setIsAddingMode(false);
+        setDescription("");
         const newTask = {
-            id: Math.round(Math.random() * 1000),
             description: description,
             status: "TODO",
-            createdAt: new Date()
         };
-        setTasks(tasks.concat([newTask]));
-        setDescription("");
+        axios.post('/api/tasks', newTask)
+            .then(response => {
+                onAdd(response.data);
+            })
+            .catch(() => {
+
+            })
+            .then(() => {
+                setIsAddingMode(false);
+            })
     }
 
     function cancel() {
@@ -35,7 +42,7 @@ function Panel({title}) {
                 {tasks.map(t =>
                     <div key={t.id} className="panel-card">
                         <div>{t.description}</div>
-                        <div className="created-at">Created: {formatDate(t.createdAt)}</div>
+                        <div className="created-at">Created: {moment(t.createdAt).format('D MMM YYYY, HH:mm')}</div>
                     </div>
                 )}
             </div>

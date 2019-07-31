@@ -1,5 +1,7 @@
 export default function formatDate(date) {
-    var monthNames = [
+    if (!date || !(date instanceof Date)) return "";
+
+    const monthNames = [
         "January", "February", "March",
         "April", "May", "June", "July",
         "August", "September", "October",
