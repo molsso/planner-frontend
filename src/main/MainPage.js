@@ -20,12 +20,12 @@ function Main() {
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
-                    <h1>
-                        Planner. Hello {authService.getCurrentUser().fullName}
-                    </h1>
-                    <p>
+                    <h2>Planner.</h2>
+                    <h3>
+                        <i className="fa fa-user"/> Hello {authService.getCurrentUser().fullName}
+                        <span> </span>
                         <button onClick={logout}>Logout</button>
-                    </p>
+                    </h3>
                 </div>
             </div>
 

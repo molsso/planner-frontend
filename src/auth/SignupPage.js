@@ -10,16 +10,21 @@ function SignupPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [redirect, setRedirect] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     function submit(e) {
         e.preventDefault();
         setError("");
+        setIsLoading(true);
         authService.signup({username, password, fullName})
             .then(() => {
                 setRedirect(true);
             })
             .catch(() => {
                 setError("Something went wrong.");
+            })
+            .then(() => {
+                setIsLoading(false);
             });
     }
 
@@ -73,7 +78,12 @@ function SignupPage() {
                             />
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="btn btn-primary btn-block">Signup</button>
+                            <button type="submit"
+                                    className="btn btn-primary btn-block"
+                                    disabled={isLoading}>
+                                {isLoading ? <i className="fa fa-spin fa-spinner"/> : null}
+                                Signup
+                            </button>
                         </div>
                         {/*<div className="clearfix">*/}
                         {/*    <a href="#" className="pull-right">Forgot Password?</a>*/}
