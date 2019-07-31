@@ -49,14 +49,17 @@ function Main() {
             <div className="row">
                 <Panel tasks={tasks.filter(t => t.status === "TODO")}
                        title="To Do"
+                       defaultStatus="TODO"
                        onAdd={newTask => setTasks(tasks.concat([newTask]))}
                 />
                 <Panel tasks={tasks.filter(t => t.status === "IN_PROGRESS")}
                        title="In Progress"
+                       defaultStatus="IN_PROGRESS"
                        onAdd={newTask => setTasks(tasks.concat([newTask]))}
                 />
                 <Panel tasks={tasks.filter(t => t.status === "DONE")}
                        title="Done"
+                       defaultStatus="DONE"
                        onAdd={newTask => setTasks(tasks.concat([newTask]))}
                 />
             </div>

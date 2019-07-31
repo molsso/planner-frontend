@@ -3,7 +3,7 @@ import './Panel.css';
 import axios from "axios";
 import moment from 'moment';
 
-function Panel({title, tasks, onAdd}) {
+function Panel({title, defaultStatus, tasks, onAdd}) {
 
     const [description, setDescription] = useState("");
     const [isAddingMode, setIsAddingMode] = useState(false);
@@ -13,7 +13,7 @@ function Panel({title, tasks, onAdd}) {
         setDescription("");
         const newTask = {
             description: description,
-            status: "TODO",
+            status: defaultStatus,
         };
         axios.post('/api/tasks', newTask)
             .then(response => {
@@ -43,6 +43,7 @@ function Panel({title, tasks, onAdd}) {
                     <div key={t.id} className="panel-card">
                         <div>{t.description}</div>
                         <div className="created-at">Created: {moment(t.createdAt).format('D MMM YYYY, HH:mm')}</div>
+                        <div className="created-at">Author: {t.authorName}</div>
                     </div>
                 )}
             </div>
