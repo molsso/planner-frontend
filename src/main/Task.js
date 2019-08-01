@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Draggable} from "react-beautiful-dnd";
+import moment from "moment";
 
 const Container = styled.div`
     border: 1px solid black;
@@ -11,7 +12,25 @@ const Container = styled.div`
     background-color: ${props => (props.isDragging ? '#edf5ff' : 'white')};
 `;
 
-export default function Task({task, index}) {
+const Content = styled.div`
+    
+`;
+
+const Meta = styled.div`
+    font-size: 12px;
+    font-color: grey;
+    font-style: italic;
+`;
+
+const Actions = styled.div`
+    
+`;
+
+export default function Task({task, index, onDelete}) {
+
+    function editTask() {
+
+    }
 
     return (
         <Draggable draggableId={task.id} index={index}>
@@ -23,9 +42,29 @@ export default function Task({task, index}) {
                     isDragging={snapshot.isDragging}
                 >
 
-                    <div>{task.description}</div>
-                    {/*<div className="created-at">Created: {moment(task.createdAt).format('D MMM YYYY, HH:mm')}</div>*/}
-                    {/*<div className="created-at">Author: {task.authorName}</div>*/}
+                    <Content>{task.description}</Content>
+                    <hr/>
+                    <Meta>
+                        <div>Created: {moment(task.createdAt).format('D MMM YYYY, HH:mm')}</div>
+                        <div>Author: {task.authorName}</div>
+                    </Meta>
+                    <Actions>
+                        <button className="btn btn-sm btn-info" onClick={editTask}>Edit</button>
+                        <span> </span>
+                        <button className="btn btn-sm btn-warning" onClick={() => onDelete(task.id)}>Delete</button>
+                    </Actions>
+
+                    {/*{isAddingMode &&*/}
+                    {/*<div>*/}
+                    {/*    <textarea*/}
+                    {/*        placeholder="Enter title for a new task"*/}
+                    {/*        onChange={e => setDescription(e.target.value)}*/}
+                    {/*        className="card-textfield"*/}
+                    {/*        value={description}*/}
+                    {/*    />*/}
+
+                    {/*</div>*/}
+                    {/*}*/}
 
                 </Container>
             )}

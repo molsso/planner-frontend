@@ -18,12 +18,11 @@ const ColumnsContainer = styled.div`
 
 function Main() {
 
-    const [loggingOut, setLoggingOut] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-
     const [tasks, setTasks] = useState([]);
     const [columns, setColumns] = useState([]);
     const [columnsOrder, setColumnsOrder] = useState([]);
+    const [loggingOut, setLoggingOut] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(false);
@@ -34,22 +33,22 @@ function Main() {
                 const taskListSchema = new schema.Array(taskSchema);
                 const denormalizedTasks = normalize(tasks.data, taskListSchema);
                 const newTasks = denormalizedTasks.entities.tasks || [];
+                setTasks(newTasks);
 
                 const columnSchema = new schema.Entity('columns');
                 const columnListSchema = new schema.Array(columnSchema);
                 const denormalizedColumns = normalize(columns.data, columnListSchema);
                 const newColumns = denormalizedColumns.entities.columns || [];
+                setColumns(newColumns);
 
                 // Get columns
                 const newColumnsOrder = columns.data.map(column => column.id);
-                newColumnsOrder.map(columnId => {
+                newColumnsOrder.forEach(columnId => {
                     newColumns[columnId] = {
                         ...newColumns[columnId],
                         taskIds: (newColumns[columnId].taskIds || '').split(',').filter(id => id).map(id => Number(id))
                     };
                 });
-                setTasks(newTasks);
-                setColumns(newColumns);
                 setColumnsOrder(newColumnsOrder);
             }))
             .catch(() => {
@@ -71,10 +70,6 @@ function Main() {
     function logout() {
         authService.logout();
         setLoggingOut(true);
-    }
-
-    function updateTaskStatus() {
-
     }
 
     function onDragEnd(result) {
@@ -148,6 +143,25 @@ function Main() {
             });
     }
 
+    function deleteTask(taskId, columnId) {
+        debugger;
+        const newTasks = {...tasks};
+        delete newTasks[taskId];
+        setTasks(newTasks);
+
+        const newColumns = {...columns};
+        const newTaskIds = newColumns[columnId].taskIds.filter(id => id !== taskId);
+        newColumns[columnId].taskIds = newTaskIds;
+        setColumns(newColumns);
+
+        updatePosition({columnId: columnId, taskIds: newTaskIds.join(',')});
+        axios.delete(`/api/v1/tasks/${taskId}`)
+            .then(() => {
+
+            });
+
+    }
+
     if (loggingOut) {
         return <Redirect to="/auth/login"/>;
     }
@@ -170,7 +184,7 @@ function Main() {
                     {columnsOrder.map((columnId) => {
                         const column = columns[columnId];
                         const columnTasks = column.taskIds.map(taskId => tasks[taskId]);
-                        return <Column key={column.id} column={column} tasks={columnTasks}/>;
+                        return <Column key={column.id} column={column} tasks={columnTasks} onDelete={deleteTask}/>;
                     })}
                 </ColumnsContainer>
             </DragDropContext>

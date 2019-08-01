@@ -23,7 +23,7 @@ const TaskList = styled.div`
     background-color: ${props => (props.isDraggingOver ? '#eeeeee' : 'white')};
 `;
 
-function Column({column, tasks}) {
+function Column({column, tasks, onDelete}) {
 
     return (
         <Container>
@@ -37,13 +37,31 @@ function Column({column, tasks}) {
                         isDraggingOver={snapshot.isDraggingOver}
                     >
                         {tasks.map((task, index) => (
-                            <Task key={task.id} task={task} index={index}/>
+                            <Task key={task.id}
+                                  task={task}
+                                  index={index}
+                                  onDelete={(taskId) => onDelete(taskId, column.id)}
+                            />
                         ))}
 
                         {provided.placeholder}
                     </TaskList>
                 )}
             </Droppable>
+
+            {/*{isAddingMode &&*/}
+            {/*<div>*/}
+            {/*    <button className="btn btn-success" onClick={addTask}>add</button>*/}
+            {/*    <span> </span>*/}
+            {/*    <button className="btn btn-danger" onClick={cancel}>cancel</button>*/}
+            {/*</div>*/}
+            {/*}*/}
+
+            {/*{!isAddingMode &&*/}
+            {/*<button className="btn btn-secondary" onClick={() => setIsAddingMode(true)}>*/}
+            {/*    Add card*/}
+            {/*</button>*/}
+            {/*}*/}
         </Container>
     );
 }
