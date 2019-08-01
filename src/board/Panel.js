@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import './Panel.css';
 import axios from "axios";
-import moment from 'moment';
 
 function Panel({title, defaultStatus, tasks, onAdd}) {
 
     const [description, setDescription] = useState("");
     const [isAddingMode, setIsAddingMode] = useState(false);
+
     //const [isLoading, setIsLoading] = useState(false);
 
     function addTask() {
@@ -39,13 +39,9 @@ function Panel({title, defaultStatus, tasks, onAdd}) {
             <hr/>
 
             <div className="panel">
-                {tasks.map(t =>
-                    <div key={t.id} className="panel-card">
-                        <div>{t.description}</div>
-                        <div className="created-at">Created: {moment(t.createdAt).format('D MMM YYYY, HH:mm')}</div>
-                        <div className="created-at">Author: {t.authorName}</div>
-                    </div>
-                )}
+                {/*{tasks.map(t =>*/}
+                {/*    <Card key={t.id} task={t}/>*/}
+                {/*)}*/}
             </div>
 
             {isAddingMode &&
