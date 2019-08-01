@@ -53,19 +53,6 @@ export default function Task({task, index, onDelete}) {
                         <span> </span>
                         <button className="btn btn-sm btn-warning" onClick={() => onDelete(task.id)}>Delete</button>
                     </Actions>
-
-                    {/*{isAddingMode &&*/}
-                    {/*<div>*/}
-                    {/*    <textarea*/}
-                    {/*        placeholder="Enter title for a new task"*/}
-                    {/*        onChange={e => setDescription(e.target.value)}*/}
-                    {/*        className="card-textfield"*/}
-                    {/*        value={description}*/}
-                    {/*    />*/}
-
-                    {/*</div>*/}
-                    {/*}*/}
-
                 </Container>
             )}
         </Draggable>

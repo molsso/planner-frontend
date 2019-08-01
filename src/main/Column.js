@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Task from "./Task";
 import {Droppable} from "react-beautiful-dnd";
@@ -23,7 +23,24 @@ const TaskList = styled.div`
     background-color: ${props => (props.isDraggingOver ? '#eeeeee' : 'white')};
 `;
 
-function Column({column, tasks, onDelete}) {
+const Actions = styled.div`
+    padding: 8px;
+`;
+
+function Column({column, tasks, onDelete, onAdd}) {
+
+    const [isAddingMode, setIsAddingMode] = useState(false);
+    const [description, setDescription] = useState('');
+
+    function addTask() {
+        onAdd({description: description}, column.id);
+        cancel();
+    }
+
+    function cancel() {
+        setIsAddingMode(false);
+        setDescription("");
+    }
 
     return (
         <Container>
@@ -49,19 +66,31 @@ function Column({column, tasks, onDelete}) {
                 )}
             </Droppable>
 
-            {/*{isAddingMode &&*/}
-            {/*<div>*/}
-            {/*    <button className="btn btn-success" onClick={addTask}>add</button>*/}
-            {/*    <span> </span>*/}
-            {/*    <button className="btn btn-danger" onClick={cancel}>cancel</button>*/}
-            {/*</div>*/}
-            {/*}*/}
+            <hr/>
 
-            {/*{!isAddingMode &&*/}
-            {/*<button className="btn btn-secondary" onClick={() => setIsAddingMode(true)}>*/}
-            {/*    Add card*/}
-            {/*</button>*/}
-            {/*}*/}
+            <Actions>
+                {isAddingMode &&
+                <div>
+                    <textarea
+                        style={{width: '100%'}}
+                        placeholder="Enter title for a new task"
+                        onChange={e => setDescription(e.target.value)}
+                        className="card-textfield"
+                        value={description}
+                    />
+                    <div>
+                        <button className="btn btn-success" onClick={addTask}>add</button>
+                        <span> </span>
+                        <button className="btn btn-danger" onClick={cancel}>cancel</button>
+                    </div>
+                </div>
+                }
+                {!isAddingMode &&
+                <button className="btn btn-sm btn-secondary" onClick={() => setIsAddingMode(true)}>
+                    Add card
+                </button>
+                }
+            </Actions>
         </Container>
     );
 }

@@ -144,7 +144,6 @@ function Main() {
     }
 
     function deleteTask(taskId, columnId) {
-        debugger;
         const newTasks = {...tasks};
         delete newTasks[taskId];
         setTasks(newTasks);
@@ -159,7 +158,22 @@ function Main() {
             .then(() => {
 
             });
+    }
 
+    function addTask(task, columnId) {
+        return axios.post(`/api/v1/tasks`, task)
+            .then(response => response.data)
+            .then(savedTask => {
+                const newTasks = {...tasks, [savedTask.id]: savedTask};
+                setTasks(newTasks);
+
+                const newColumns = {...columns};
+                const newTaskIds = [...newColumns[columnId].taskIds, savedTask.id];
+                newColumns[columnId].taskIds = newTaskIds;
+                setColumns(newColumns);
+
+                updatePosition({columnId: columnId, taskIds: newTaskIds.join(',')});
+            });
     }
 
     if (loggingOut) {
@@ -184,7 +198,14 @@ function Main() {
                     {columnsOrder.map((columnId) => {
                         const column = columns[columnId];
                         const columnTasks = column.taskIds.map(taskId => tasks[taskId]);
-                        return <Column key={column.id} column={column} tasks={columnTasks} onDelete={deleteTask}/>;
+                        return (
+                            <Column key={column.id}
+                                    column={column}
+                                    tasks={columnTasks}
+                                    onDelete={deleteTask}
+                                    onAdd={addTask}
+                            />
+                        );
                     })}
                 </ColumnsContainer>
             </DragDropContext>
