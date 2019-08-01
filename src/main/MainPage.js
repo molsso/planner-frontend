@@ -7,7 +7,10 @@ import {DragDropContext} from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import {normalize, schema} from 'normalizr';
 
-const Header = styled.div``;
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
 
 const ColumnsContainer = styled.div`
     display: flex;
@@ -152,12 +155,14 @@ function Main() {
     return (
         <div className="container">
             <Header>
-                <h2>Planner. {isLoading ? "Loading..." : ""}</h2>
-                <h3>
+                <div>
+                    <h2>Planner. {isLoading ? "Loading..." : ""}</h2>
+                </div>
+                <div style={{justifyContent: 'right'}}>
                     <i className="fa fa-user"/> Hello {authService.getCurrentUser().fullName}
                     <span> </span>
-                    <button onClick={logout}>Logout</button>
-                </h3>
+                    <button className="btn btn-warning" onClick={logout}>Logout</button>
+                </div>
             </Header>
 
             <DragDropContext onDragEnd={onDragEnd}>
