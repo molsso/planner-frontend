@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import './App.css';
 import axios from "axios";
-//import authService from "./commons/auth.service";
+import authService from "./commons/auth.service";
 
 function App({history}) {
 
