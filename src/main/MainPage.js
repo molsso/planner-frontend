@@ -184,7 +184,7 @@ function Main() {
         <div className="container">
             <Header>
                 <div>
-                    <h2>Planner. {isLoading ? "Loading..." : ""}</h2>
+                    <h2>Loyola Planner. {isLoading ? "Loading..." : ""}</h2>
                 </div>
                 <div style={{justifyContent: 'right'}}>
                     <i className="fa fa-user"/> Hello {authService.getCurrentUser().fullName}
