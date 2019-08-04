@@ -185,7 +185,9 @@ function Main() {
         // Update remote value
         axios.put(`/api/v1/tasks/${taskId}`, newTasks[taskId])
             .then(response => {
-                console.log('Sucessfuly updated.')
+                const newTasks = {...tasks};
+                newTasks[taskId] = response.data;
+                setTasks(newTasks);
             })
     }
 
