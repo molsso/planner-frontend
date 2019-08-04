@@ -67,8 +67,6 @@ function Column({column, tasks, onDelete, onAdd, onSave}) {
                 )}
             </Droppable>
 
-            <hr/>
-
             <Actions>
                 {isAddingMode &&
                 <div>

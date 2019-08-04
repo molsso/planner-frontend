@@ -64,7 +64,6 @@ export default function Task({task, index, onSave, onDelete}) {
                     {!isEditMode &&
                     <div>
                         <Content>{task.description}</Content>
-                        <hr/>
                         <Meta>
                             <div>Created: {moment(task.createdAt).format('D MMM YYYY, HH:mm')}</div>
                             <div>Author: {task.authorName}</div>
