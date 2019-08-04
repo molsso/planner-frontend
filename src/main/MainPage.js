@@ -176,6 +176,19 @@ function Main() {
             });
     }
 
+    function saveTask(taskId, newContent) {
+        // Update local state
+        const newTasks = {...tasks};
+        newTasks[taskId].description = newContent;
+        setTasks(newTasks);
+
+        // Update remote value
+        axios.put(`/api/v1/tasks/${taskId}`, newTasks[taskId])
+            .then(response => {
+                console.log('Sucessfuly updated.')
+            })
+    }
+
     if (loggingOut) {
         return <Redirect to="/auth/login"/>;
     }
@@ -204,6 +217,7 @@ function Main() {
                                     tasks={columnTasks}
                                     onDelete={deleteTask}
                                     onAdd={addTask}
+                                    onSave={saveTask}
                             />
                         );
                     })}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {Draggable} from "react-beautiful-dnd";
 import moment from "moment";
@@ -26,10 +26,29 @@ const Actions = styled.div`
     
 `;
 
-export default function Task({task, index, onDelete}) {
+const Textarea = styled.textarea`
+    width: 100%;
+`;
+
+export default function Task({task, index, onSave, onDelete}) {
+
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [newContent, setNewContent] = useState("");
+
+    function saveTask() {
+        onSave(task.id, newContent);
+        setIsEditMode(false);
+        setNewContent("");
+    }
 
     function editTask() {
+        setNewContent(task.description);
+        setIsEditMode(true);
+    }
 
+    function cancelEdit() {
+        setNewContent("");
+        setIsEditMode(false);
     }
 
     return (
@@ -42,17 +61,30 @@ export default function Task({task, index, onDelete}) {
                     isDragging={snapshot.isDragging}
                 >
 
-                    <Content>{task.description}</Content>
-                    <hr/>
-                    <Meta>
-                        <div>Created: {moment(task.createdAt).format('D MMM YYYY, HH:mm')}</div>
-                        <div>Author: {task.authorName}</div>
-                    </Meta>
-                    <Actions>
-                        <button className="btn btn-sm btn-info" onClick={editTask}>Edit</button>
+                    {!isEditMode &&
+                    <div>
+                        <Content>{task.description}</Content>
+                        <hr/>
+                        <Meta>
+                            <div>Created: {moment(task.createdAt).format('D MMM YYYY, HH:mm')}</div>
+                            <div>Author: {task.authorName}</div>
+                        </Meta>
+                        <Actions>
+                            <button className="btn btn-sm btn-success" onClick={editTask}>Edit</button>
+                            <span> </span>
+                            <button className="btn btn-sm btn-warning" onClick={() => onDelete(task.id)}>Delete</button>
+                        </Actions>
+                    </div>
+                    }
+
+                    {isEditMode &&
+                    <div>
+                        <Textarea value={newContent} onChange={e => setNewContent(e.target.value)}/>
+                        <button className="btn btn-sm btn-success" onClick={saveTask}>Save</button>
                         <span> </span>
-                        <button className="btn btn-sm btn-warning" onClick={() => onDelete(task.id)}>Delete</button>
-                    </Actions>
+                        <button className="btn btn-sm btn-secondary" onClick={() => cancelEdit()}>Cancel</button>
+                    </div>
+                    }
                 </Container>
             )}
         </Draggable>

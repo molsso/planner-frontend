@@ -27,7 +27,7 @@ const Actions = styled.div`
     padding: 8px;
 `;
 
-function Column({column, tasks, onDelete, onAdd}) {
+function Column({column, tasks, onDelete, onAdd, onSave}) {
 
     const [isAddingMode, setIsAddingMode] = useState(false);
     const [description, setDescription] = useState('');
@@ -57,6 +57,7 @@ function Column({column, tasks, onDelete, onAdd}) {
                             <Task key={task.id}
                                   task={task}
                                   index={index}
+                                  onSave={(taskId, newContent) => onSave(taskId, newContent)}
                                   onDelete={(taskId) => onDelete(taskId, column.id)}
                             />
                         ))}
