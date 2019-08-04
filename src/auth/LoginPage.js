@@ -27,7 +27,7 @@ function Login() {
             });
     }
 
-    if (redirect) {
+    if (!isLoading && redirect) {
         return <Redirect to="/"/>;
     }
 
