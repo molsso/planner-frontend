@@ -65,11 +65,12 @@ export default function Task({task, index, onSave, onDelete}) {
                     <div>
                         <Content>{task.description}</Content>
                         <Meta>
-                            <div>
-                                Created: {moment(task.createdAt).format('D MMM YYYY, HH:mm')}<br/>
-                                <span>Updated at: {moment(task.updatedAt).format('D MMM YYYY, HH:mm')}</span>
-                            </div>
-                            <div>Author: {task.authorName}</div>
+                            Author: {task.authorName}<br/>
+                            Created: {moment(task.createdAt).format('D MMM YYYY, HH:mm')}<br/>
+                            {task.updatedAt
+                                ? (<span>Updated at: {moment(task.updatedAt).format('D MMM YYYY, HH:mm')}</span>)
+                                : null
+                            }
                         </Meta>
                         <Actions>
                             <button className="btn btn-sm btn-success" onClick={editTask}>Edit</button>
